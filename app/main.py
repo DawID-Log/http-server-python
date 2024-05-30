@@ -18,7 +18,7 @@ def main():
     conn, addr = server_socket.accept()  # wait for client
 
     print(f"connection request from address {addr}")
-    conn.accept()[0].sendall(b""+statusLine+crlf+crlf)
+    conn.accept()[0].sendall(reqLine+crlf+header+crlf)
 
 
 if __name__ == "__main__":
