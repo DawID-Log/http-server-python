@@ -18,7 +18,7 @@ def main():
     conn, addr = server_socket.accept()  # wait for client
 
     print(f"connection request from address {addr}")
-    conn.accept()[0].sendall(reqLine+crlf+header+crlf)
+    conn.accept()[0].sendall(b"GET /index.html HTTP/1.1\r\nHost: localhost:4221\r\nUser-Agent: curl/7.64.1\r\nAccept: */*\r\n\r\n")
 
 
 if __name__ == "__main__":
