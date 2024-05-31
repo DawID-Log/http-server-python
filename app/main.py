@@ -1,3 +1,4 @@
+import sys
 import socket
 import threading
 
@@ -43,6 +44,10 @@ def send_request(client):
             string = path[1].strip("/user-agent/")
             response = f"HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n".encode()
             print(f"La stringa risposta: {string}")
+        if "files" in path[1]:
+            directory = sys.argv[2]
+            filename = path[7:]
+            print(directory, filename)
 
         #HEADER
         args.pop(0)    
@@ -59,7 +64,6 @@ def send_request(client):
 def main():
     print("Logs from your program will appear here!")
 
-    # Quando devo testare
     server_socket: socket.socket = socket.create_server(
         ("localhost", 4221), reuse_port=True
     )
