@@ -42,7 +42,7 @@ def send_request(client):
 
         #STATUS
         if path == "/":
-            response = b"HTTP/1.1 200 OK\r\n\r\n"
+            response = "HTTP/1.1 200 OK\r\n\r\n"
         elif "echo" in path:
             bodyInEcho = path.replace("/echo/", "")
             response = f"HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: {len(bodyInEcho)}\r\n"
