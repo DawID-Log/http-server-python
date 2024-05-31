@@ -88,7 +88,7 @@ def send_request(client):
                 print(f"acc: {acceptEncoding.split(",")}")
                 if len(acceptEncoding.split(",")) > 1 and "gzip" in acceptEncoding:
                     response += f"Content-Encoding: gzip\r\n"
-                else:
+                elif len(acceptEncoding.split(",")) == 1:
                     response += f"Content-Encoding: {acceptEncoding}\r\n"
                     print(f"response_Accept-Encoding: {response}")
         response += f"\r\n{bodyInEcho if bodyInEcho != "" else userAgent}"
