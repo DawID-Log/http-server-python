@@ -66,7 +66,7 @@ def main():
             for arg in args:
                 if "User-Agent" in arg:
                     print(f"UserAgent: {arg}")
-                    userAgent = arg.strip("User-Agent: ")
+                    userAgent = arg.strip("User-Agent:")
                     response += f"Content-Length: {len(userAgent)}\r\n\r\n{userAgent}".encode()
                     print(f"NEW RESPONSE: {response}")
 
