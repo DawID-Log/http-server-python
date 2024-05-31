@@ -68,7 +68,7 @@ def main():
                     print(f"UserAgent: {arg}")
                     userAgent = arg.replace("User-Agent:" , '').replace(' ', '')
                     response += f"Content-Length: {len(userAgent)}\r\n\r\n{userAgent}".encode()
-                    print(f"NEW RESPONSE: {response}")
+                    print(f"NEW RESPONSE: {response}") 
 
 
         print(f"Received: {val}")
