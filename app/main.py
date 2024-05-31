@@ -64,7 +64,7 @@ def send_request(client):
                     response = f"HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: {len(body)}\r\n\r\n{body}".encode()
                 elif module.upper() == "POST":
                     with open(operDir, "wb") as file:
-                        print(f"args: {args[len(args)]}")
+                        print(f"RETURN: {args[len(args-1)]}")
                         # file.write(body_data)
                         client.send("HTTP/1.1 201 OK\r\n\r\n".encode())
                         client.close()
