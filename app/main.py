@@ -96,9 +96,9 @@ def send_request(client):
                 elif len(acceptEncoding.split(",")) == 1:
                     response += f"Content-Encoding: {acceptEncoding}\r\n"
 
+        body = bodyInEcho if bodyInEcho != "" else userAgent
         if isGzip:
-            body = bodyInEcho if bodyInEcho != "" else userAgent
-            gzip.compress(body)
+            body = gzip.compress(body)
         response += f"\r\n{body}"
         print(f"response: {response}")
 
