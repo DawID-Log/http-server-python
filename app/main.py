@@ -100,10 +100,23 @@ def send_request(client):
         if isGzip:
             body = gzip.compress(body.encode())
             print(f"response before send: {response}")
+            # client.send(
+            #     b"".join(
+            #         [
+            #             response.encode(),
+            #             b"\r\n",
+            #             body,
+            #         ]
+            #     )
+            # )
             client.send(
                 b"".join(
                     [
-                        response.encode(),
+                        b"HTTP/1.1 200 OK",
+                        b"\r\n",
+                        b"Content-Encoding: gzip\r\n",
+                        b"Content-Type: text/plain\r\n",
+                        b"Content-Length: %d\r\n" % len(body),
                         b"\r\n",
                         body,
                     ]
