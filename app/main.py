@@ -33,7 +33,7 @@ def send_request(client):
     val = client.recv(1024)
     pars = val.decode()
     args = pars.split("\r\n")
-    response = b"HTTP/1.1 404 Not Found\r\n\r\n"
+    response = "HTTP/1.1 404 Not Found\r\n\r\n"
     bodyInEcho = ""
     method = args[0].split(" ")[0]
 
