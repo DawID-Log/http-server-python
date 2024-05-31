@@ -34,12 +34,10 @@ def send_request(client):
     pars = val.decode()
     args = pars.split("\r\n")
     response = b"HTTP/1.1 404 Not Found\r\n\r\n"
+    module = args[0].split(" ")[0]
 
-    if len(args) > 1:
-        module = args[0].split(" ")[0]
+    if (len(args) > 1):
         path = args[0].split(" ")[1]
-        print(f"MODULE: {module}")
-        print(f"DIR: {FILE_DIR}")
 
         #STATUS
         if path == "/":
@@ -54,13 +52,23 @@ def send_request(client):
         elif "files" in path:
             directory = sys.argv[2]
             filename = path.replace("/files/", '')
+            body = ""
             print(f"dir: {directory}")
             print(f"fName: {filename}")
             try:
-                with open(f"/{directory}/{filename}", "r") as file:
-                    body = file.read()
-                    print(f"body: {body}")
-                response = f"HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: {len(body)}\r\n\r\n{body}".encode()
+                operDir = f"/{directory}/{filename}"
+                if module.upper() == "GET":
+                    with open(operDir, "r") as file:
+                        body = file.read()
+                        print(f"body: {body}")
+                    response = f"HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: {len(body)}\r\n\r\n{body}".encode()
+                elif module.upper() == "POST":
+                    with open(operDir, "wb") as file:
+                        print(f"args: {args}")
+                        # file.write(body_data)
+                        client.send("HTTP/1.1 201 OK\r\n\r\n".encode())
+                        client.close()
+                
             except Exception:
                 response = f"HTTP/1.1 404 Not Found\r\n\r\n".encode()
 
