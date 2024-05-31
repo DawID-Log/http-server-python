@@ -32,21 +32,21 @@ def send_request(client):
     response = b"HTTP/1.1 404 Not Found\r\n\r\n"
 
     if len(args) > 1:
-        path = args[0].split(" ")
+        path = args[0].split(" ")[1]
 
         #STATUS
-        if path[1] == "/":
+        if path == "/":
             response = b"HTTP/1.1 200 OK\r\n\r\n"
-        elif "echo" in path[1]:
-            string = path[1].strip("/echo/")
+        elif "echo" in path:
+            string = path.strip("/echo/")
             response = f"HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: {len(string)}\r\n\r\n{string}".encode()
-        elif "user-agent" in path[1]:
-            string = path[1].strip("/user-agent/")
+        elif "user-agent" in path:
+            string = path.strip("/user-agent/")
             response = f"HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n".encode()
             print(f"La stringa risposta: {string}")
-        elif "files" in path[1]:
+        elif "files" in path:
             directory = sys.argv[2]
-            filename = path[1][7:]
+            filename = path[7:]
             print(f"dir: {directory}")
             print(f"fName: {filename}")
 
