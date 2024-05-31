@@ -25,38 +25,35 @@ def create_header(isFirstRequest):
     return request_string
 
 def send_request(client):
-     with client:
-        val = client.recv(1024)
-        pars = val.decode()
-        args = pars.split("\r\n")
-        response = b"HTTP/1.1 404 Not Found\r\n\r\n"
+    val = client.recv(1024)
+    pars = val.decode()
+    args = pars.split("\r\n")
+    response = b"HTTP/1.1 404 Not Found\r\n\r\n"
 
-        if len(args) > 1:
-            path = args[0].split(" ")
+    if len(args) > 1:
+        path = args[0].split(" ")
 
-            #STATUS
-            if path[1] == "/":
-                response = b"HTTP/1.1 200 OK\r\n\r\n"
-            if "echo" in path[1]:
-                string = path[1].strip("/echo/")
-                response = f"HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: {len(string)}\r\n\r\n{string}".encode()
-            if "user-agent" in path[1]:
-                string = path[1].strip("/user-agent/")
-                response = f"HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n".encode()
-                print(f"La stringa risposta: {string}")
+        #STATUS
+        if path[1] == "/":
+            response = b"HTTP/1.1 200 OK\r\n\r\n"
+        if "echo" in path[1]:
+            string = path[1].strip("/echo/")
+            response = f"HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: {len(string)}\r\n\r\n{string}".encode()
+        if "user-agent" in path[1]:
+            string = path[1].strip("/user-agent/")
+            response = f"HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n".encode()
+            print(f"La stringa risposta: {string}")
 
-            #HEADER
-            args.pop(0)    
-            for arg in args:
-                if "User-Agent" in arg:
-                    print(f"UserAgent: {arg}")
-                    userAgent = arg.replace("User-Agent:" , '').replace(' ', '')
-                    response += f"Content-Length: {len(userAgent)}\r\n\r\n{userAgent}".encode()
-                    print(f"NEW RESPONSE: {response}") 
-
-
-        print(f"Received: {val}")
-        client.sendall(response)
+        #HEADER
+        args.pop(0)    
+        for arg in args:
+            if "User-Agent" in arg:
+                print(f"UserAgent: {arg}")
+                userAgent = arg.replace("User-Agent:" , '').replace(' ', '')
+                response += f"Content-Length: {len(userAgent)}\r\n\r\n{userAgent}".encode()
+                print(f"NEW RESPONSE: {response}") 
+    print(f"Received: {val}")
+    client.sendall(response)
     
 
 def main():
