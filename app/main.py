@@ -34,6 +34,7 @@ def send_request(client):
     pars = val.decode()
     args = pars.split("\r\n")
     response = b"HTTP/1.1 404 Not Found\r\n\r\n"
+    bodyInEcho = ""
     method = args[0].split(" ")[0]
 
     if (len(args) > 1):
@@ -43,8 +44,8 @@ def send_request(client):
         if path == "/":
             response = b"HTTP/1.1 200 OK\r\n\r\n"
         elif "echo" in path:
-            string = path.replace("/echo/", "")
-            response = f"HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: {len(string)}\r\n\r\n{string}".encode()
+            bodyInEcho = path.replace("/echo/", "")
+            response = f"HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: {len(bodyInEcho)}".encode()
         elif "user-agent" in path:
             string = path.replace("/user-agent/", "")
             response = f"HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n".encode()
@@ -85,7 +86,7 @@ def send_request(client):
                 print(f"Accept-Encoding: {arg}")
                 acceptEncoding = arg.replace("Accept-Encoding:" , '').replace(' ', '')
                 response += f"Content-Encoding: {acceptEncoding}\r\n"
-            response += f"\r\n{userAgent}".encode()
+            response += f"\r\n{bodyInEcho if bodyInEcho != "" else userAgent}".encode()
             print(f"response: {response}")
 
 
