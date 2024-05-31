@@ -81,11 +81,11 @@ def send_request(client):
             if "User-Agent" in arg:
                 print(f"UserAgent: {arg}")
                 userAgent = arg.replace("User-Agent:" , '').replace(' ', '')
-                response += f"Content-Length: {len(userAgent)}\r\n"
+                response += f"Content-Length: {len(userAgent)}\r\n".encode()
             elif "Accept-Encoding" in arg:
                 print(f"Accept-Encoding: {arg}")
                 acceptEncoding = arg.replace("Accept-Encoding:" , '').replace(' ', '')
-                response += f"Content-Encoding: {acceptEncoding}\r\n"
+                response += f"Content-Encoding: {acceptEncoding}\r\n".encode()
             response += f"\r\n{bodyInEcho if bodyInEcho != "" else userAgent}".encode()
             print(f"response_NEW: {response}")
 
