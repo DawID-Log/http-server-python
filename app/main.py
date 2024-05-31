@@ -34,7 +34,7 @@ def send_request(client):
     pars = val.decode()
     args = pars.split("\r\n")
     response = b"HTTP/1.1 404 Not Found\r\n\r\n"
-    module = args[0].split(" ")[0]
+    method = args[0].split(" ")[0]
 
     if (len(args) > 1):
         path = args[0].split(" ")[1]
@@ -56,19 +56,20 @@ def send_request(client):
             print(f"fName: {filename}")
             try:
                 operDir = f"/{directory}/{filename}"
-                if module.upper() == "GET":
+                if method.upper() == "GET":
                     with open(operDir, "r") as file:
                         body = file.read()
                         print(f"body: {body}")
                     response = f"HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: {len(body)}\r\n\r\n{body}".encode()
-                elif module.upper() == "POST":
+                elif method.upper() == "POST":
                     body_data = args[len(args) - 1]
                     print(f"Write file: {body_data}")
                     with open(operDir, "wb") as file:
                         print(".")
                         file.write(body_data)
                         response = "HTTP/1.1 201 OK\r\n\r\n".encode()
-            except Exception:
+            except Exception as error:
+                print(f"Failed with method: {method} when read/write: {error}")
                 response = f"HTTP/1.1 404 Not Found\r\n\r\n".encode()
 
         #HEADER
