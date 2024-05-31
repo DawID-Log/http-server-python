@@ -105,7 +105,7 @@ def send_request(client):
 
 
     print(f"Received: {val}")
-    client.sendall(response.encode())
+    client.sendall(response)
     
 
 def main():
