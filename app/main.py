@@ -46,9 +46,10 @@ def send_request(client):
             print(f"La stringa risposta: {string}")
         elif "files" in path:
             directory = sys.argv[2]
-            filename = path[7:]
+            filename = path.replace("/files/", '')
             print(f"dir: {directory}")
             print(f"fName: {filename}")
+
 
         #HEADER
         args.pop(0)    
