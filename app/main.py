@@ -87,7 +87,7 @@ def send_request(client):
                 acceptEncoding = arg.replace("Accept-Encoding:" , '').replace(' ', '')
                 response += f"Content-Encoding: {acceptEncoding}\r\n"
             response += f"\r\n{bodyInEcho if bodyInEcho != "" else userAgent}".encode()
-            print(f"response: {response}")
+            print(f"response_NEW: {response}")
 
 
     print(f"Received: {val}")
