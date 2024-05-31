@@ -102,12 +102,7 @@ def send_request(client):
             client.send(
                 b"".join(
                     [
-                        b"HTTP/1.1 200 OK",
-                        b"\r\n",
-                        *extra_headers,
-                        b"Content-Type: text/plain\r\n",
-                        b"Content-Length: %d\r\n" % len(body),
-                        b"\r\n",
+                        response.encode(),
                         body,
                     ]
                 )
