@@ -78,7 +78,14 @@ def send_request(client):
             if "User-Agent" in arg:
                 print(f"UserAgent: {arg}")
                 userAgent = arg.replace("User-Agent:" , '').replace(' ', '')
-                response += f"Content-Length: {len(userAgent)}\r\n\r\n{userAgent}".encode()
+                response += f"Content-Length: {len(userAgent)}\r\n"
+            elif "Accept-Encoding" in arg:
+                print(f"Accept-Encoding: {arg}")
+                acceptEncoding = arg.replace("Encoding-Agent:" , '').replace(' ', '')
+                response += f"Content-Encoding: {acceptEncoding}\r\n"
+            response += "\r\n{userAgent}".encode()
+
+
     print(f"Received: {val}")
     client.sendall(response)
     
