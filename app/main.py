@@ -45,10 +45,10 @@ def send_request(client):
             response = b"HTTP/1.1 200 OK\r\n\r\n"
         elif "echo" in path:
             bodyInEcho = path.replace("/echo/", "")
-            response = f"HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: {len(bodyInEcho)}".encode()
+            response = f"HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: {len(bodyInEcho)}"
         elif "user-agent" in path:
             string = path.replace("/user-agent/", "")
-            response = f"HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n".encode()
+            response = f"HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n"
             print(f"La stringa risposta: {string}")
         elif "files" in path:
             directory = sys.argv[2]
@@ -61,17 +61,17 @@ def send_request(client):
                     with open(operDir, "r") as file:
                         body = file.read()
                         print(f"body: {body}")
-                    response = f"HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: {len(body)}\r\n\r\n{body}".encode()
+                    response = f"HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: {len(body)}\r\n\r\n{body}"
                 elif method.upper() == "POST":
                     body_data = args[len(args) - 1]
                     print(f"Write file: {body_data}")
                     with open(operDir, "wb") as file:
                         print(".")
                         file.write(body_data.encode())
-                        response = "HTTP/1.1 201 Created\r\n\r\n".encode()
+                        response = "HTTP/1.1 201 Created\r\n\r\n"
             except Exception as error:
                 print(f"Failed with method: {method} when read/write: {error}")
-                response = f"HTTP/1.1 404 Not Found\r\n\r\n".encode()
+                response = f"HTTP/1.1 404 Not Found\r\n\r\n"
 
         #HEADER
         args.pop(0)    
@@ -80,17 +80,17 @@ def send_request(client):
             if "User-Agent" in arg:
                 print(f"UserAgent: {arg}")
                 userAgent = arg.replace("User-Agent:" , '').replace(' ', '')
-                response += f"Content-Length: {len(userAgent)}\r\n".encode()
+                response += f"Content-Length: {len(userAgent)}\r\n"
             if "Accept-Encoding" in arg:
                 print(f"Accept-Encoding: {arg}")
                 acceptEncoding = arg.replace("Accept-Encoding:" , '').replace(' ', '')
-                response += f"Content-Encoding: {acceptEncoding}\r\n".encode()
-        response += f"\r\n{bodyInEcho if bodyInEcho != "" else userAgent}".encode()
+                response += f"Content-Encoding: {acceptEncoding}\r\n"
+        response += f"\r\n{bodyInEcho if bodyInEcho != "" else userAgent}"
         print(f"response_NEW: {response}")
 
 
     print(f"Received: {val}")
-    client.sendall(response)
+    client.sendall(response.encode())
     
 
 def main():
