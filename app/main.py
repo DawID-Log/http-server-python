@@ -85,6 +85,7 @@ def send_request(client):
                 acceptEncoding = arg.replace("Accept-Encoding:" , '').replace(' ', '')
                 response += f"Content-Encoding: {acceptEncoding}\r\n"
             response += f"\r\n{userAgent}".encode()
+            print(f"response: {response}")
 
 
     print(f"Received: {val}")
