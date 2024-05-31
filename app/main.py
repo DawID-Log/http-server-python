@@ -37,16 +37,16 @@ def send_request(client):
         #STATUS
         if path[1] == "/":
             response = b"HTTP/1.1 200 OK\r\n\r\n"
-        if "echo" in path[1]:
+        elif "echo" in path[1]:
             string = path[1].strip("/echo/")
             response = f"HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: {len(string)}\r\n\r\n{string}".encode()
-        if "user-agent" in path[1]:
+        elif "user-agent" in path[1]:
             string = path[1].strip("/user-agent/")
             response = f"HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n".encode()
             print(f"La stringa risposta: {string}")
-        if "files" in path[1]:
+        elif "files" in path[1]:
             directory = sys.argv[2]
-            filename = path[7:]
+            filename = path[1][7:]
             print(f"dir: {directory}")
             print(f"fName: {filename}")
 
