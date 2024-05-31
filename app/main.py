@@ -82,7 +82,7 @@ def send_request(client):
                 response += f"Content-Length: {len(userAgent)}\r\n"
             elif "Accept-Encoding" in arg:
                 print(f"Accept-Encoding: {arg}")
-                acceptEncoding = arg.replace("Encoding-Agent:" , '').replace(' ', '')
+                acceptEncoding = arg.replace("Encoding-Encoding:" , '').replace(' ', '')
                 response += f"Content-Encoding: {acceptEncoding}\r\n"
             response += f"\r\n{userAgent}".encode()
 
