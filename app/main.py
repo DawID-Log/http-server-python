@@ -119,7 +119,8 @@ def send_request(client):
 
 
     print(f"Received: {val}")
-    client.sendall(response.encode())
+    if not isGzip:
+        client.sendall(response.encode())
     
 
 def main():
