@@ -76,6 +76,7 @@ def send_request(client):
         args.pop(0)    
         for arg in args:
             userAgent = ""
+            print(f"ARGOMENT: {arg}")
             if "User-Agent" in arg:
                 print(f"UserAgent: {arg}")
                 userAgent = arg.replace("User-Agent:" , '').replace(' ', '')
