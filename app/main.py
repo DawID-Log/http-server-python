@@ -85,8 +85,11 @@ def send_request(client):
             elif ("Accept-Encoding" in arg) and ("invalid-encoding" not in arg):
                 print(f"Accept-Encoding: {arg}")
                 acceptEncoding = arg.replace("Accept-Encoding:" , '').replace(' ', '')
-                response += f"Content-Encoding: {acceptEncoding}\r\n"
-                print(f"response_Accept-Encoding: {response}")
+                if len(acceptEncoding.split(", ")) > 1 and "gzip" in acceptEncoding:
+                    response += f"Content-Encoding: gzip\r\n"
+                else:
+                    response += f"Content-Encoding: {acceptEncoding}\r\n"
+                    print(f"response_Accept-Encoding: {response}")
         response += f"\r\n{bodyInEcho if bodyInEcho != "" else userAgent}"
         print(f"response_NEW: {response}")
 
