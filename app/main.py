@@ -75,9 +75,8 @@ def send_request(client):
 
         #HEADER
         args.pop(0)    
+        userAgent = ""
         for arg in args:
-            userAgent = ""
-            print(f"ARGOMENT: {arg}")
             if "User-Agent" in arg:
                 print(f"UserAgent: {arg}")
                 userAgent = arg.replace("User-Agent:" , '').replace(' ', '')
@@ -86,8 +85,8 @@ def send_request(client):
                 print(f"Accept-Encoding: {arg}")
                 acceptEncoding = arg.replace("Accept-Encoding:" , '').replace(' ', '')
                 response += f"Content-Encoding: {acceptEncoding}\r\n".encode()
-            response += f"\r\n{bodyInEcho if bodyInEcho != "" else userAgent}".encode()
-            print(f"response_NEW: {response}")
+        response += f"\r\n{bodyInEcho if bodyInEcho != "" else userAgent}".encode()
+        print(f"response_NEW: {response}")
 
 
     print(f"Received: {val}")
