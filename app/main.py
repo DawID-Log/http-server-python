@@ -100,7 +100,8 @@ def send_request(client):
         if isGzip:
             body = gzip.compress(body.encode())
             print(f"compressed body: {body}")
-        response.join([f"\r\n{body}"])
+        response += "\r\n"
+        response.join([body])
         print(f"response: {response}")
 
 
