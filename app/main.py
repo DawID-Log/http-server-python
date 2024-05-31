@@ -98,7 +98,7 @@ def send_request(client):
 
         body = bodyInEcho if bodyInEcho != "" else userAgent
         if isGzip:
-            body = gzip.compress(body.encode())
+            body = gzip.compress(body)
             print(f"compressed bodye: {body}")
         response += f"\r\n{body}"
         print(f"response: {response}")
