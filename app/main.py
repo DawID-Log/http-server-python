@@ -38,10 +38,10 @@ def send_request(client):
         if path == "/":
             response = b"HTTP/1.1 200 OK\r\n\r\n"
         elif "echo" in path:
-            string = path.strip("/echo/")
+            string = path.replace("/echo/", "")
             response = f"HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: {len(string)}\r\n\r\n{string}".encode()
         elif "user-agent" in path:
-            string = path.strip("/user-agent/")
+            string = path.replace("/user-agent/", "")
             response = f"HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n".encode()
             print(f"La stringa risposta: {string}")
         elif "files" in path:
@@ -54,8 +54,7 @@ def send_request(client):
                     body = f.read()
                     print(f"body: {body}")
                 response = f"HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: {len(body)}\r\n\r\n{body}".encode()
-
-            except Exception as e:
+            except Exception:
                 response = f"HTTP/1.1 404 Not Found\r\n\r\n".encode()
 
         #HEADER
@@ -65,7 +64,6 @@ def send_request(client):
                 print(f"UserAgent: {arg}")
                 userAgent = arg.replace("User-Agent:" , '').replace(' ', '')
                 response += f"Content-Length: {len(userAgent)}\r\n\r\n{userAgent}".encode()
-                print(f"NEW RESPONSE: {response}") 
     print(f"Received: {val}")
     client.sendall(response)
     
