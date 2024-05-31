@@ -67,7 +67,7 @@ def send_request(client):
                     with open(operDir, "wb") as file:
                         print(".")
                         file.write(body_data.encode())
-                        response = "HTTP/1.1 201 OK\r\n\r\n".encode()
+                        response = "HTTP/1.1 201 Created\r\n\r\n".encode()
             except Exception as error:
                 print(f"Failed with method: {method} when read/write: {error}")
                 response = f"HTTP/1.1 404 Not Found\r\n\r\n".encode()
