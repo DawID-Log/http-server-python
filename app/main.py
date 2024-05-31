@@ -38,7 +38,7 @@ def send_request(client):
 
     if (len(args) > 1):
         path = args[0].split(" ")[1]
-        print(f"RETURN: {args[len(args-1)]}")
+        print(f"RETURN: {args[len(args) - 1]}")
         #STATUS
         if path == "/":
             response = b"HTTP/1.1 200 OK\r\n\r\n"
@@ -62,7 +62,7 @@ def send_request(client):
                         print(f"body: {body}")
                     response = f"HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: {len(body)}\r\n\r\n{body}".encode()
                 elif module.upper() == "POST":
-                    print(f"RETURN: {args[len(args-1)]}")
+                    print(f"RETURN: {args[len(args) - 1]}")
                     with open(operDir, "wb") as file:
                         # file.write(body_data)
                         # client.send("HTTP/1.1 201 OK\r\n\r\n".encode())
