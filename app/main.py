@@ -103,7 +103,6 @@ def send_request(client):
             client.send(
                 b"".join(
                     [
-                        b"\r\n",
                         response.encode(),
                         b"\r\n",
                         body,
