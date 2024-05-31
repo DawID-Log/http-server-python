@@ -105,6 +105,7 @@ def send_request(client):
                         response.encode(),
                         b"\r\n",
                         body,
+                        b"\r\n",
                     ]
                 )
             )
