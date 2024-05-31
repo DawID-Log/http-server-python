@@ -66,8 +66,8 @@ def send_request(client):
                     with open(operDir, "wb") as file:
                         print(f"RETURN: {args[len(args-1)]}")
                         # file.write(body_data)
-                        client.send("HTTP/1.1 201 OK\r\n\r\n".encode())
-                        client.close()
+                        # client.send("HTTP/1.1 201 OK\r\n\r\n".encode())
+                        # client.close()
                 
             except Exception:
                 response = f"HTTP/1.1 404 Not Found\r\n\r\n".encode()
