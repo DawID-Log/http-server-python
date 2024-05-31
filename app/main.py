@@ -38,7 +38,7 @@ def send_request(client):
 
     if (len(args) > 1):
         path = args[0].split(" ")[1]
-
+        print(f"RETURN: {args[len(args-1)]}")
         #STATUS
         if path == "/":
             response = b"HTTP/1.1 200 OK\r\n\r\n"
@@ -52,7 +52,6 @@ def send_request(client):
         elif "files" in path:
             directory = sys.argv[2]
             filename = path.replace("/files/", '')
-            body = ""
             print(f"dir: {directory}")
             print(f"fName: {filename}")
             try:
