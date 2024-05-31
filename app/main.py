@@ -69,12 +69,8 @@ def main():
     # server_socket.bind(("localhost", 4221))
     # server_socket.listen()
 
-    client, addr = server_socket.accept()
-
-    # send_req(client, create_header(isFirstRequest=True))
-    # send_req(client, create_header(isFirstRequest=False))
-
     while True:
+        client, addr = server_socket.accept()
         threading.Thread(target=lambda: send_request(client)).start()
 
 if __name__ == "__main__":
