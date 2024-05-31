@@ -2,6 +2,7 @@ import sys
 import argparse
 import socket
 import threading
+import gzip
 
 FILE_DIR = ""
 
@@ -76,6 +77,7 @@ def send_request(client):
         #HEADER
         args.pop(0)    
         userAgent = ""
+        isGzip = False
         for arg in args:
             if "User-Agent" in arg:
                 print(f"UserAgent: {arg}")
@@ -86,13 +88,19 @@ def send_request(client):
                 print(f"Accept-Encoding: {arg}")
                 acceptEncoding = arg.replace("Accept-Encoding:" , '').replace(' ', '')
                 print(f"acc: {acceptEncoding.split(",")}")
-                if len(acceptEncoding.split(",")) > 1 and "gzip" in acceptEncoding:
+                if "gzip" in acceptEncoding:
+                    isGzip = True
+
+                if len(acceptEncoding.split(",")) > 1 and isGzip:
                     response += f"Content-Encoding: gzip\r\n"
                 elif len(acceptEncoding.split(",")) == 1:
                     response += f"Content-Encoding: {acceptEncoding}\r\n"
-                    print(f"response_Accept-Encoding: {response}")
-        response += f"\r\n{bodyInEcho if bodyInEcho != "" else userAgent}"
-        print(f"response_NEW: {response}")
+
+        if isGzip:
+            body = bodyInEcho if bodyInEcho != "" else userAgent
+            gzip.compress(body)
+        response += f"\r\n{body}"
+        print(f"response: {response}")
 
 
     print(f"Received: {val}")
