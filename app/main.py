@@ -47,7 +47,8 @@ def send_request(client):
         if "files" in path[1]:
             directory = sys.argv[2]
             filename = path[7:]
-            print(directory, filename)
+            print(f"dir: {directory}")
+            print(f"fName: {filename}")
 
         #HEADER
         args.pop(0)    
