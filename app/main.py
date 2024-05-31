@@ -45,7 +45,7 @@ def send_request(client):
             response = b"HTTP/1.1 200 OK\r\n\r\n"
         elif "echo" in path:
             bodyInEcho = path.replace("/echo/", "")
-            response = f"HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: {len(bodyInEcho)}"
+            response = f"HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: {len(bodyInEcho)}\r\n"
         elif "user-agent" in path:
             string = path.replace("/user-agent/", "")
             response = f"HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n"
