@@ -1,6 +1,9 @@
 import sys
+import argparse
 import socket
 import threading
+
+FILE_DIR = ""
 
 def send_request_demo(client, req):
     response: bytes = req.encode()
@@ -26,13 +29,17 @@ def create_header(isFirstRequest):
     return request_string
 
 def send_request(client):
+    global FILE_DIR
     val = client.recv(1024)
     pars = val.decode()
     args = pars.split("\r\n")
     response = b"HTTP/1.1 404 Not Found\r\n\r\n"
 
     if len(args) > 1:
+        module = args[0].split(" ")[0]
         path = args[0].split(" ")[1]
+        print(f"MODULE: {module}")
+        print(f"DIR: {FILE_DIR}")
 
         #STATUS
         if path == "/":
@@ -50,8 +57,8 @@ def send_request(client):
             print(f"dir: {directory}")
             print(f"fName: {filename}")
             try:
-                with open(f"/{directory}/{filename}", "r") as f:
-                    body = f.read()
+                with open(f"/{directory}/{filename}", "r") as file:
+                    body = file.read()
                     print(f"body: {body}")
                 response = f"HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: {len(body)}\r\n\r\n{body}".encode()
             except Exception:
@@ -70,6 +77,13 @@ def send_request(client):
 
 def main():
     print("Logs from your program will appear here!")
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-d", "--directory")
+    args = parser.parse_args()
+
+    if "directory" in args:
+        global FILE_DIR
+        FILE_DIR = args.directory
 
     server_socket: socket.socket = socket.create_server(
         ("localhost", 4221), reuse_port=True
