@@ -99,6 +99,7 @@ def send_request(client):
         body = bodyInEcho if bodyInEcho != "" else userAgent
         if isGzip:
             body = gzip.compress(body.encode())
+            print(f"response before send: {body}")
             client.send(
                 b"".join(
                     [
