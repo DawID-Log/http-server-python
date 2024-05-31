@@ -58,7 +58,7 @@ def main():
                 response = f"HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: {len(string)}\r\n\r\n{string}".encode()
             if "user-agent" in path[1]:
                 string = path[1].strip("/user-agent/")
-                response = f"HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: {len(string)}\r\n\r\n"
+                response = f"HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n"
                 print(f"La stringa risposta: {string}")
 
             #HEADER
@@ -67,7 +67,7 @@ def main():
                 if "User-Agent" in arg:
                     print(f"UserAgent: {arg}")
                     userAgent = arg.strip("User-Agent: ")
-                    response += userAgent
+                    response += f"Content-Length: {len(userAgent)}\r\n\r\n{userAgent}"
                     print(f"NEW RESPONSE: {response}")
 
 
