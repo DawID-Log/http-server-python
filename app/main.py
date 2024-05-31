@@ -52,6 +52,7 @@ def send_request(client):
             try:
                 with open(f"/{directory}/{filename}", "r") as f:
                     body = f.read()
+                    print(f"body: {body}")
                 response = f"HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: {len(body)}\r\n\r\n{body}".encode()
 
             except Exception as e:
