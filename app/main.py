@@ -1,6 +1,7 @@
 import socket
+import threading
 
-def send_req(client, req):
+def send_request_demo(client, req):
     response: bytes = req.encode()
     data: str = client.recv(1024).decode()
     request_data: list[str] = data.split("\r\n")
@@ -23,25 +24,8 @@ def create_header(isFirstRequest):
         request_string = reqLine + crlf + header + crlf
     return request_string
 
-def main():
-    print("Logs from your program will appear here!")
-
-    # Quando devo testare
-    server_socket: socket.socket = socket.create_server(
-        ("localhost", 4221), reuse_port=True
-    )
-
-    # server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    # server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    # server_socket.bind(("localhost", 4221))
-    # server_socket.listen()
-
-    client, addr = server_socket.accept()
-
-    # send_req(client, create_header(isFirstRequest=True))
-    # send_req(client, create_header(isFirstRequest=False))
-
-    with client:
+def send_request(client):
+     with client:
         val = client.recv(1024)
         pars = val.decode()
         args = pars.split("\r\n")
@@ -73,6 +57,28 @@ def main():
 
         print(f"Received: {val}")
         client.sendall(response)
+    
+
+def main():
+    print("Logs from your program will appear here!")
+
+    # Quando devo testare
+    server_socket: socket.socket = socket.create_server(
+        ("localhost", 4221), reuse_port=True
+    )
+
+    # server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    # server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    # server_socket.bind(("localhost", 4221))
+    # server_socket.listen()
+
+    client, addr = server_socket.accept()
+
+    # send_req(client, create_header(isFirstRequest=True))
+    # send_req(client, create_header(isFirstRequest=False))
+
+    while True:
+        threading.Thread(target=lambda: send_request(client)).start()
 
 if __name__ == "__main__":
     main()
